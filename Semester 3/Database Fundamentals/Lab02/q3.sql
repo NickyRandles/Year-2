@@ -1,0 +1,1 @@
+select empno, ename, deptno from emp

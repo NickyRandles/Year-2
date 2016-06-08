@@ -1,0 +1,153 @@
+package Cinema;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.print.*;
+import java.sql.*;
+
+public class GUI_invoiceFrame{
+	
+	JInternalFrame invoiceFrame = new JInternalFrame();
+	JPanel panel, bottomPanel;
+	JLabel invoice, note01, note02; 
+	JButton printButton;
+	static JTextArea invoiceDetails;
+	Font headerFont = new Font("Ariel", Font.BOLD, 20);
+	
+	Connection connect;
+	String host = "jdbc:mysql://localhost/cinema";
+	String username = "root";
+	String password = "";
+	
+	public void invoiceFrame()
+	{
+		GUI_invoiceFrame invoiceFrame = new GUI_invoiceFrame();
+		invoiceFrame.go();
+	}
+	
+	public void go()
+	{
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		
+		invoice = new JLabel("Invoice");
+		invoice.setFont(headerFont);
+		invoice.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(invoice, BorderLayout.NORTH);
+		
+		invoiceDetails = new JTextArea();
+		invoiceDetails.setEditable(false);
+		
+		try
+		{
+			connect = DriverManager.getConnection(host, username, password);
+			PreparedStatement statement = connect.prepareStatement("Select * from transactions where id = " + GUI_shoppingFrame.k);
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next())
+			{
+				invoiceDetails.setText("Movie: " + result.getString(4) + "\nDate: " + result.getString(5) + "\nTime: " + result.getString(6) + "\nQuantity: " + result.getString(7)  + "\nTotal: " + result.getString(8)  + "\nPayment status: " + result.getString(9));
+			}
+			
+			
+		}
+		
+		catch(SQLException e)
+		{
+			
+		}
+		
+		catch(Exception e)
+		{
+			
+		}
+		
+		panel.add(invoiceDetails, BorderLayout.CENTER);
+		
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		
+		note01 = new JLabel("<html>Note: Please print off this invoice and <br> hand to cashier as prove of purchase</html>");
+		note01.setHorizontalAlignment(SwingConstants.CENTER);
+		note01.setBorder(new LineBorder(Color.blue, 2));
+		printButton = new JButton("Print");
+		printButton.addActionListener(new PrintButtonListener());
+		note02 = new JLabel("<html>Note: if you are not able to print this invoice <br> please give the cashier you account details</html>");
+		note02.setHorizontalAlignment(SwingConstants.CENTER);
+		note02.setBorder(new LineBorder(Color.blue, 2));
+		
+		bottomPanel.add(note01, BorderLayout.NORTH);
+		bottomPanel.add(printButton, BorderLayout.CENTER);
+		bottomPanel.add(note02, BorderLayout.SOUTH);
+		
+		bottomPanel.setBorder(new LineBorder(Color.cyan, 20));
+
+		panel.add(bottomPanel, BorderLayout.SOUTH);
+		
+		invoiceFrame.add(panel);
+
+		GUITemplate.header(invoiceFrame);
+		GUITemplate.footer(invoiceFrame);
+		
+		GUI.desktop.add(invoiceFrame);
+		
+		invoiceFrame.setSize(484, 462);
+		invoiceFrame.setVisible(true);
+	}
+	
+	public class PrintButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+		//MyString printing = new MyString(text.getText());
+			printPage(invoiceDetails.getText());
+		}
+		
+		public void printPage(String textToPrint)
+		{
+			PrinterJob job = PrinterJob.getPrinterJob();
+			PageFormat landscape = job.defaultPage();
+			landscape.setOrientation(PageFormat.LANDSCAPE);
+			Book bk = new Book();
+			bk.append(new PaintCover(), job.defaultPage());
+			//bk.append(new PaintContent(), landscape);
+			job.setPageable(bk);
+			//job.setPrintable(new PaintCover(), job.defaultPage());
+			if (job.printDialog()) 
+			{
+				try 
+				{
+					job.print();
+				}
+				catch (Exception exc)
+				{
+					System.out.println(exc);
+				}
+			}
+		}
+		class PaintCover implements Printable
+		{
+			Font fnt = new Font("Helvetica-Bold", Font.PLAIN, 48);
+			
+			public int print(Graphics g, PageFormat pf, int pageIndex) throws PrinterException
+			{
+				g.setFont(fnt);
+				g.setColor(Color.black);
+				g.drawString(invoiceDetails.getText(), 100, 200);
+				return Printable.PAGE_EXISTS;
+			}
+		}
+	}	
+
+}
+
+
+
+
+
+
+

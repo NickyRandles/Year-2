@@ -1,0 +1,5 @@
+tag1=Chat
+tag2=Chien
+tag3=Plan
+tag4=Voiture
+tag5=Cerf-volant

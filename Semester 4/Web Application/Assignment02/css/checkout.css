@@ -1,0 +1,31 @@
+/* CSS Document */
+#info
+{
+	margin-left: 20%;
+	border-collapse: collapse;
+	width: 60%;
+
+}
+
+#form
+{
+	border-collapse: collapse;
+	width: 30%;
+	margin-left: 35%;
+	text-align:center;
+}
+
+form
+{
+	border: 2px solid red; 
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 5%;
+	border-radius: 10px;
+	
+}
+
+#buttons
+{
+	margin-left: 20%;
+}

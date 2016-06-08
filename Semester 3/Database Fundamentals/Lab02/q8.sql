@@ -1,0 +1,1 @@
+select ename, deptno, empno from emp where empno = 7566;

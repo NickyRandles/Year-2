@@ -1,0 +1,1 @@
+select ename, deptno from emp where deptno = 10 or 30

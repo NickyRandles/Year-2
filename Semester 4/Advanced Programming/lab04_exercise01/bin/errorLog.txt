@@ -1,0 +1,42 @@
+Feb 20, 2007 7:25:54 PM LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+Feb 20, 2007 7:34:14 PM LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:44 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:48 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:49 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:49 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:50 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:51 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:53 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+21-Feb-2011 16:37:54 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:53 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:54 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:55 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:56 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:56 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:57 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:58 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:55:59 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:56:01 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:56:02 LoggingFileOutputTest main
+SEVERE: An exception occurred in here
+04-Mar-2013 16:56:05 LoggingFileOutputTest main
+SEVERE: An exception occurred in here

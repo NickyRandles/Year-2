@@ -1,0 +1,5 @@
+tag1=Gato
+tag2=Perro
+tag3=Plano
+tag4=Coche
+tag5=Cometa

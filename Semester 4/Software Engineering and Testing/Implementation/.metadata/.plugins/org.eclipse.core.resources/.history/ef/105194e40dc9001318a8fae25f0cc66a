@@ -1,0 +1,160 @@
+package Cinema;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+public class GUI_checkoutFrame {
+	
+	JInternalFrame checkoutFrame = new JInternalFrame();
+	JPanel panel, centerPanel, bottomPanel, centerGridPanel, bottomCardPanel, bottomCashPanel;
+	JLabel shoppingBasket, items, payment, cardNo, empty, orLabel;
+	JTextField cardNoField;
+	JLabel [] itemHeader, item;
+	JLabel item01, item02, item03, item04, item05;
+	JButton removeButton, enterCardNoButton, cashButton;
+	Font headerFont = new Font("Ariel", Font.BOLD, 14);
+	JScrollPane scrollPane;
+	
+	Connection connect;
+	String host = "jdbc:mysql://localhost/cinema";
+	String username = "root";
+	String password = "";
+	
+	public void checkoutFrame()
+	{
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		centerPanel = new JPanel();
+		centerPanel.setLayout(new BorderLayout());
+		centerGridPanel = new JPanel();
+		centerGridPanel.setLayout(new GridLayout(2, 6));
+		
+		shoppingBasket = new JLabel("Shopping Basket");
+		shoppingBasket.setHorizontalAlignment(SwingConstants.CENTER);
+		shoppingBasket.setFont(headerFont);
+		panel.add(shoppingBasket, BorderLayout.NORTH);
+		
+		items = new JLabel("Items");
+		items.setHorizontalAlignment(SwingConstants.CENTER);
+		items.setFont(headerFont);
+		centerPanel.add(items, BorderLayout.NORTH);
+		
+		String [] name = {"Movie", "Date", "Time", "Tickets", "Total", "Remove"};
+		itemHeader = new JLabel[6];
+		
+		for(int i = 0; i < 6; i++)
+		{
+			itemHeader[i] = new JLabel(name[i]);
+			centerGridPanel.add(itemHeader[i]);
+	
+		}
+		
+		item = new JLabel[5];
+		try
+		{
+			connect = DriverManager.getConnection(host, username, password);
+			PreparedStatement statement = connect.prepareStatement("Select * from transactions where id = 5");
+			ResultSet result = statement.executeQuery();
+			
+			
+			while(result.next())
+			{	
+				
+					item01 = new JLabel(result.getString(4));
+					item02 = new JLabel(result.getString(5));
+					item03 = new JLabel(result.getString(6));
+					item04 = new JLabel(result.getString(7));
+					item05 = new JLabel(result.getString(8));
+					centerGridPanel.add(item01);
+					centerGridPanel.add(item02);
+					centerGridPanel.add(item03);
+					centerGridPanel.add(item04);
+					centerGridPanel.add(item05);
+				
+				
+				
+				
+			}
+		
+		}
+		
+		
+		
+		catch(SQLException a)
+		{
+			a.printStackTrace();
+			// System.out.println("Not all movies slots are filled in");
+		}
+		
+		catch(Exception a)
+		{
+			a.printStackTrace();
+			System.out.println("Error");
+		}
+		
+		removeButton = new JButton("Remove");
+		centerGridPanel.add(removeButton);
+
+		centerPanel.add(centerGridPanel, BorderLayout.CENTER);
+		scrollPane = new JScrollPane(centerPanel);
+		
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		bottomPanel.setBorder(new LineBorder(Color.cyan, 20));
+		bottomCardPanel = new JPanel();
+		bottomCardPanel.setLayout(new GridLayout(2, 2));
+		bottomCashPanel = new JPanel();
+		bottomCashPanel.setLayout(new GridLayout(2, 1));
+		
+		payment = new JLabel("Payment Options");
+		payment.setHorizontalAlignment(SwingConstants.CENTER);
+		payment.setFont(headerFont);
+		bottomPanel.add(payment, BorderLayout.NORTH);
+		
+		cardNo = new JLabel("Card No:");
+		cardNoField = new JTextField();
+		empty = new JLabel();
+		enterCardNoButton = new JButton("Enter:");
+		
+		bottomCardPanel.add(cardNo);
+		bottomCardPanel.add(cardNoField);
+		bottomCardPanel.add(empty);
+		bottomCardPanel.add(enterCardNoButton);
+		
+		orLabel = new JLabel("OR");
+		orLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		cashButton = new JButton("Pay with cash");
+		
+		bottomCashPanel.add(orLabel);
+		bottomCashPanel.add(cashButton);
+		
+		bottomPanel.add(bottomCardPanel, BorderLayout.CENTER);
+		bottomPanel.add(bottomCashPanel, BorderLayout.SOUTH);
+		
+		
+		panel.add(scrollPane, BorderLayout.CENTER);
+		panel.add(bottomPanel, BorderLayout.SOUTH);
+		
+		checkoutFrame.add(panel);
+		
+		GUITemplate.header(checkoutFrame);
+		GUITemplate.footer(checkoutFrame);
+		
+		GUI.desktop.add(checkoutFrame);
+		
+		checkoutFrame.setSize(484, 462);
+		checkoutFrame.setVisible(true);
+	}
+
+}

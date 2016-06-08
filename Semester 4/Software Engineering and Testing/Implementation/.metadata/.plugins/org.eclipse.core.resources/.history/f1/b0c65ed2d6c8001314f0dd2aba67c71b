@@ -1,0 +1,54 @@
+package Cinema;
+
+import java.awt.*;
+
+import javax.swing.*;
+
+public class GUI_invoiceFrame {
+	
+	JInternalFrame invoiceFrame = new JInternalFrame();
+	JPanel panel, bottomPanel;
+	JLabel invoice, note01, note02; 
+	JButton printButton;
+	JTextArea invoiceDetails;
+	
+	public void invoiceFrame()
+	{
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		
+		invoice = new JLabel("Invoice");
+		invoice.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(invoice, BorderLayout.NORTH);
+		
+		invoiceDetails = new JTextArea();
+		panel.add(invoiceDetails, BorderLayout.CENTER);
+		
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		
+		note01 = new JLabel("<html>Note: Please print off this invoice and <br> hand to cashier as prove of purchase</html>");
+		note01.setHorizontalAlignment(SwingConstants.CENTER);
+		printButton = new JButton("Print");
+		note02 = new JLabel("<html>Note: if you are not able to print this invoice <br> please give the cashier you account details</html>");
+		note02.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		bottomPanel.add(note01, BorderLayout.NORTH);
+		bottomPanel.add(printButton, BorderLayout.CENTER);
+		bottomPanel.add(note02, BorderLayout.SOUTH);
+	
+		panel.add(bottomPanel, BorderLayout.SOUTH);
+		
+		invoiceFrame.add(panel);
+
+		GUITemplate.header(invoiceFrame);
+		GUITemplate.footer(invoiceFrame);
+		
+		GUI.desktop.add(invoiceFrame);
+		
+		invoiceFrame.setSize(484, 462);
+		invoiceFrame.setVisible(true);
+	}
+
+}

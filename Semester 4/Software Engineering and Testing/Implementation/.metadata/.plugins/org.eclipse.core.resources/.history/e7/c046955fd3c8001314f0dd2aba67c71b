@@ -1,0 +1,24 @@
+package Cinema;
+
+import java.awt.*;
+import javax.swing.*;
+
+public class GUI_invoiceFrame {
+	
+	JInternalFrame invoiceFrame = new JInternalFrame();
+	
+	
+	public void invoiceFrame()
+	{
+
+		
+		GUITemplate.header(invoiceFrame);
+		GUITemplate.footer(invoiceFrame);
+		
+		GUI.desktop.add(invoiceFrame);
+		
+		invoiceFrame.setSize(484, 462);
+		invoiceFrame.setVisible(false);
+	}
+
+}

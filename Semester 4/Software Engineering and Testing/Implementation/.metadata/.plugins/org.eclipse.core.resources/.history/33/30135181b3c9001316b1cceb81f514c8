@@ -1,0 +1,289 @@
+package Cinema;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+public class GUI_checkoutFrame implements ActionListener {
+	
+	public static GUI_invoiceFrame GUI_invoice = new GUI_invoiceFrame();
+	
+	static JInternalFrame checkoutFrame = new JInternalFrame();
+	JPanel panel, centerPanel, bottomPanel, centerGridPanel, bottomCardPanel, bottomCashPanel;
+	JLabel shoppingBasket, items, payment, cardNo, empty, orLabel;
+	JTextField cardNoField;
+	JLabel [] itemHeader, item;
+	JButton removeButton, enterCardNoButton, cashButton;
+	Font headerFont = new Font("Ariel", Font.BOLD, 14);
+	JScrollPane scrollPane;
+	JFrame frame;
+	
+	Connection connect;
+	String host = "jdbc:mysql://localhost/cinema";
+	String username = "root";
+	String password = "";
+	
+	public void checkoutFrame()
+	{
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		centerPanel = new JPanel();
+		centerPanel.setLayout(new BorderLayout());
+		centerGridPanel = new JPanel();
+		centerGridPanel.setLayout(new GridLayout(2, 6));
+		
+		shoppingBasket = new JLabel("Shopping Basket");
+		shoppingBasket.setHorizontalAlignment(SwingConstants.CENTER);
+		shoppingBasket.setFont(headerFont);
+		panel.add(shoppingBasket, BorderLayout.NORTH);
+		
+		items = new JLabel("Items");
+		items.setHorizontalAlignment(SwingConstants.CENTER);
+		items.setFont(headerFont);
+		centerPanel.add(items, BorderLayout.NORTH);
+		
+		String [] name = {"Movie", "Date", "Time", "Tickets", "Total", "Remove"};
+		itemHeader = new JLabel[6];
+		
+		for(int i = 0; i < 6; i++)
+		{
+			itemHeader[i] = new JLabel(name[i]);
+			itemHeader[i].setMinimumSize(new Dimension(40, 10));
+			itemHeader[i].setHorizontalAlignment(SwingConstants.CENTER);
+			centerGridPanel.add(itemHeader[i]);
+	
+		}
+		
+		item = new JLabel[5];
+		
+		int idNum = GUI_shoppingFrame.k + 1;
+		try
+		{
+			connect = DriverManager.getConnection(host, username, password);
+			PreparedStatement statement = connect.prepareStatement("Select * from transactions where id = " + idNum);
+			ResultSet result = statement.executeQuery();
+			
+			
+			while(result.next())
+			{	
+				for(int i = 0; i < 5; i++)
+				{
+					item[i] = new JLabel(result.getString(i + 4));
+					item[i].setMinimumSize(new Dimension(40, 10));
+					item[i].setHorizontalAlignment(SwingConstants.CENTER);
+					centerGridPanel.add(item[i]);
+				}
+				
+				
+				
+			}
+		
+		}
+		
+		
+		
+		catch(SQLException a)
+		{
+			a.printStackTrace();
+			// System.out.println("Not all movies slots are filled in");
+		}
+		
+		catch(Exception a)
+		{
+			a.printStackTrace();
+			System.out.println("Error");
+		}
+		
+		removeButton = new JButton("Remove");
+		removeButton.addActionListener(this);
+		centerGridPanel.add(removeButton);
+
+		centerPanel.add(centerGridPanel, BorderLayout.CENTER);
+		scrollPane = new JScrollPane(centerPanel);
+		
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		bottomPanel.setBorder(new LineBorder(Color.cyan, 20));
+		bottomCardPanel = new JPanel();
+		bottomCardPanel.setLayout(new GridLayout(2, 2));
+		bottomCashPanel = new JPanel();
+		bottomCashPanel.setLayout(new GridLayout(2, 1));
+		
+		payment = new JLabel("Payment Options");
+		payment.setHorizontalAlignment(SwingConstants.CENTER);
+		payment.setFont(headerFont);
+		bottomPanel.add(payment, BorderLayout.NORTH);
+		
+		cardNo = new JLabel("Card No:");
+		cardNoField = new JTextField();
+		empty = new JLabel();
+		enterCardNoButton = new JButton("Enter");
+		enterCardNoButton.addActionListener(this);
+		
+		bottomCardPanel.add(cardNo);
+		bottomCardPanel.add(cardNoField);
+		bottomCardPanel.add(empty);
+		bottomCardPanel.add(enterCardNoButton);
+		
+		orLabel = new JLabel("OR");
+		orLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		cashButton = new JButton("Pay with cash");
+		cash.addActionListener(this);
+		
+		bottomCashPanel.add(orLabel);
+		bottomCashPanel.add(cashButton);
+		
+		bottomPanel.add(bottomCardPanel, BorderLayout.CENTER);
+		bottomPanel.add(bottomCashPanel, BorderLayout.SOUTH);
+		
+		
+		panel.add(scrollPane, BorderLayout.CENTER);
+		panel.add(bottomPanel, BorderLayout.SOUTH);
+		
+		checkoutFrame.add(panel);
+		
+		GUITemplate.header(checkoutFrame);
+		GUITemplate.footer(checkoutFrame);
+		
+		GUI.desktop.add(checkoutFrame);
+		
+		checkoutFrame.setSize(484, 462);
+		checkoutFrame.setVisible(false);
+	}
+	
+	public void checkCard()
+	{
+		try
+		{
+			String usernameLog = GUI_loginFrame.loginInfo[0];
+			String passwordLog = GUI_loginFrame.loginInfo[1]; 
+			connect = DriverManager.getConnection(host, username, password);
+			String sql = "Select * from register where username = " + usernameLog + "and password = " + passwordLog;
+			PreparedStatement statement = connect.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+			int card, cardNo;
+			
+			while(result.next())
+			{
+				card  = result.getInt(9);
+				cardNo = Integer.parseInt(cardNoField.getText());
+				
+				if(card == cardNo)
+				{
+					JOptionPane.showMessageDialog(frame, "Thank you for you purchase!", "Message", JOptionPane.INFORMATION_MESSAGE);
+					System.out.println("Correct!");
+				}
+				
+				else
+				{
+					Object[] options = {"Try again", "Pay with cash"};
+					int n = JOptionPane.showOptionDialog(frame, "Sorry the card number you enter doesn't match the one on your account", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					
+			 		if(n == JOptionPane.YES_OPTION)
+					{
+						
+					}
+
+					else
+					{
+						GUI_invoice.invoiceFrame();
+					}
+				}
+			}
+		}
+		
+		catch(SQLException b)
+		{
+			b.printStackTrace();
+		}
+		
+		catch(Exception b)
+		{
+			b.printStackTrace();
+		}
+	}
+	
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource() == removeButton)
+		{
+			try
+			{
+				connect = DriverManager.getConnection(host, username, password);
+				PreparedStatement statement = connect.prepareStatement("Delete from transactions where id = " + GUI_shoppingFrame.k);
+				statement.execute();
+			}
+			
+			catch(SQLException a)
+			{
+				a.printStackTrace();
+			}
+			
+			catch(Exception a)
+			{
+				a.printStackTrace();	
+			}
+			
+		}
+		
+		else if(e.getSource() == enterCardNoButton)
+		{
+			try
+			{
+				String usernameLog = GUI_loginFrame.loginInfo[0];
+				String passwordLog = GUI_loginFrame.loginInfo[1]; 
+				connect = DriverManager.getConnection(host, username, password);
+				String sql = "Select * from register where username = '" + usernameLog + "' and password = '" + passwordLog + "'";
+				PreparedStatement statement = connect.prepareStatement(sql);
+				ResultSet result = statement.executeQuery();
+				int card, cardNo;
+				
+				while(result.next())
+				{
+					card  = result.getInt(9);
+					cardNo = Integer.parseInt(cardNoField.getText());
+					
+					if(card == cardNo)
+					{
+						PreparedStatement statement02 = connect.prepareStatement("update transactions set paymentStatus = 'paid' where id = " + GUI_shoppingFrame.k);
+						statement02.execute();
+					}
+					
+					else
+					{
+						System.out.println("Wrong!");
+					}
+				}
+			}
+			
+			catch(SQLException b)
+			{
+				b.printStackTrace();
+			}
+			
+			catch(Exception b)
+			{
+				b.printStackTrace();
+			}
+		}
+		
+		else if(e.getSource() == cashButton)
+		{
+			GUI_invoice.go();
+		}
+		
+	}
+
+}

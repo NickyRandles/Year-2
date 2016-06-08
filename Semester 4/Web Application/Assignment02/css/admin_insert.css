@@ -1,0 +1,16 @@
+/* CSS Document */
+form
+{
+	border: 2px solid green;
+	border-radius: 20px;
+	background-color: cyan;
+	margin-left: 10%;
+	margin-top: 2.5%;
+	width: 80%;
+}
+
+table
+{
+	width: 40%;
+	margin-left: 35%;
+}

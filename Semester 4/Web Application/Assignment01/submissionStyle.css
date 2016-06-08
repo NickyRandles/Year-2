@@ -1,0 +1,20 @@
+/* Assignment 1 - Submission page */
+form
+{
+	background-color: cyan;
+	margin-left: 12%;
+	border: 1px solid blue;
+	width: 52%;
+}
+
+h1
+{
+	color: blue;
+	margin-left: 25%;
+}
+#button
+{
+	background-color: yellow;
+	border: 2px solid black;
+}
+

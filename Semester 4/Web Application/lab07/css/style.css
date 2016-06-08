@@ -1,0 +1,40 @@
+/* Guestbook style */
+
+.error
+{
+	color: red; 
+}
+
+form
+{
+	border: 1px solid red;
+	background-color: cyan;
+	width: 60%;
+	margin-left: 20%;
+	
+}
+
+h1
+{
+	text-align: center;
+}
+
+label
+{
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	
+} 
+
+#buttons
+{
+	margin-left: 25%;
+}
+
+#buttons input
+{
+	border: 1px solid white;
+	background-color: blue;
+	color: white;
+}

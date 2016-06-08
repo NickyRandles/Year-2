@@ -1,0 +1,18 @@
+{
+  "C:\\Users\\Nicky\\Desktop\\College\\College\\Year 2\\Semester 4\\Advanced Programming\\lab04_exercise03\\src": {
+    "location": "C:\\Users\\Nicky\\Desktop\\College\\College\\Year 2\\Semester 4\\Advanced Programming\\lab04_exercise03\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027C:\\Users\\Nicky\\Desktop\\College\\College\\Year 2\\Semester 4\\Advanced Programming\\lab04_exercise03\\src\u0027. Skipped."
+  },
+  "C:\\Program Files\\Java\\jre7\\lib\\rt.jar": {
+    "coordinate": "jre:jre:zip:call:1.0.0",
+    "location": "C:\\Program Files\\Java\\jre7\\lib\\rt.jar",
+    "status": "RESOLVED",
+    "error": "No class path info available for \u0027C:\\Program Files\\Java\\jre7\\lib\\rt.jar\u0027. Skipped."
+  },
+  "C:\\Users\\Nicky\\Desktop\\College\\College\\Year 2\\Semester 4\\Advanced Programming\\Assignment02\\src": {
+    "location": "C:\\Users\\Nicky\\Desktop\\College\\College\\Year 2\\Semester 4\\Advanced Programming\\Assignment02\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027C:\\Users\\Nicky\\Desktop\\College\\College\\Year 2\\Semester 4\\Advanced Programming\\Assignment02\\src\u0027. Skipped."
+  }
+}

@@ -1,0 +1,110 @@
+/* Assignment 1 - form*/
+body
+{
+	
+}
+
+form
+{
+	background-color: cyan;
+	border: 1px solid red;
+	width: 65%;
+}
+
+h1
+{
+	margin-left: 15%;
+	color: purple;
+	float: left;
+}
+
+fieldset
+{
+	margin-top: 2%;
+	border-color: red;
+}
+
+legend
+{
+	color: red;
+}
+
+img
+{
+	margin-left: 15%;
+	margin-top: 1%;
+	float: left;
+}
+
+label
+{
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	
+} 
+
+.center
+{
+	margin-left: 15%;
+}
+
+#radioCenter
+{
+	margin-left: 25%;
+}
+
+#comments
+{
+	width: 98%;
+}
+
+#upload
+{
+	margin-left: 32%;
+}
+
+.details
+{
+	display: inline-block;
+	width: 10%;
+	color: blue;
+	text-align: left;
+}
+
+.textMove
+{	
+	display: inline-block;
+	width: 10%;
+	color: blue;
+	margin-left: 3%;
+	text-align: left;
+}
+
+table
+{
+	border-collapse: collapse;
+}
+
+#buttons
+{
+	margin-left: 37%;
+}
+
+#buttons input
+{
+	background-color: yellow;
+	border: 2px solid black;
+}
+
+.error
+{
+	color: red;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+tag1=Cat
+tag2=Dog
+tag3=Plane
+tag4=Car
+tag5=Kite

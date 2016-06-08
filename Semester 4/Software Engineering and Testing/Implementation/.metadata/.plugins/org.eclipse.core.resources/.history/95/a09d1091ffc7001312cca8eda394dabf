@@ -1,0 +1,267 @@
+package Cinema;
+
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+import java.sql.*;
+
+public class GUI_maintenanceFrame implements ActionListener{
+
+	static JInternalFrame maintenanceFrame = new JInternalFrame();
+	JPanel panel = new JPanel(), topPanel = new JPanel(), centerPanel = new JPanel(), bottomPanel = new JPanel(), centerBottomPanel, enterIdPanel, enterMoviePanel, removeMoviePanel, bottomTopPanel, enterNamePanel, bottomBottomPanel, removePanel, centerTopPanel, addMoviePanel;
+	JLabel currentMovies, removeMovieHeader, enterId, orLabel, enterMovie, viewUsers, removeUsers, removeId, addMovieHeader, empty ;
+	JTextField enterIdField, enterMovieField, removeIdField;
+	JTextArea moviesTextArea, usersTextArea;
+	JButton removeMovieButton, addButton;
+	String [] movies, users;
+	JLabel [] addLabel;
+	JTextField [] addField;
+	JScrollPane scrollPane, movieScrollPane, userScrollPane;
+	Font headerFont = new Font("Ariel", Font.BOLD, 14);
+	
+	Connection connect;
+	String host = "jdbc:mysql://localhost/cinema";
+	String username = "root";
+	String password = "";
+	
+	public void maintenanceFrame()
+	{
+		panel.setLayout(new BorderLayout());
+		topPanel.setLayout(new BorderLayout());
+		centerPanel.setLayout(new BorderLayout());
+		bottomPanel.setLayout(new BorderLayout());
+		
+	
+		panel.add(topPanel, BorderLayout.NORTH);
+		panel.add(centerPanel, BorderLayout.CENTER);
+		panel.add(bottomPanel, BorderLayout.SOUTH);
+		scrollPane = new JScrollPane(panel);
+		maintenanceFrame.add(scrollPane);
+		GUITemplate.header(maintenanceFrame);
+		GUITemplate.footer(maintenanceFrame);
+		
+		GUI.desktop.add(maintenanceFrame);
+		
+		maintenanceFrame.setSize(484, 462);
+		maintenanceFrame.setVisible(false);
+		
+		viewCurrentMovies();
+		addMovie();
+		removeMovie();
+		viewUsers();
+		removeUsers();
+		
+	}
+	
+	public void viewCurrentMovies()
+	{
+		currentMovies = new JLabel("View current movies");
+		currentMovies.setFont(headerFont);
+		currentMovies.setHorizontalAlignment(SwingConstants.CENTER);
+		topPanel.add(currentMovies, BorderLayout.NORTH);
+		moviesTextArea = new JTextArea(5, 20);
+		moviesTextArea.setEditable(false);
+		movieScrollPane = new JScrollPane();
+		
+		movies = new String[15];
+		
+		try
+		{
+			connect = DriverManager.getConnection(host, username, password);
+			PreparedStatement statement[] = new PreparedStatement[15];
+			ResultSet result[] = new ResultSet[15];
+			for(int i = 0; i < 15; i++)
+			{
+				statement[i] = connect.prepareStatement("Select * from movies WHERE id IN(" + (i) + ")");
+				result[i] = statement[i].executeQuery();
+			}
+			
+			for(int i = 0; i < 15; i++)
+			{
+				result[i].next();
+				movies[i] = result[i].getString(1) + ".  " + result[i].getString(2) + "  " + result[i].getString(3) + "  " + result[i].getString(4) + "  " + result[i].getString(5) + "  " + result[i].getString(6);
+				moviesTextArea.append(movies[i] + "\n"); 
+				movieScrollPane = new JScrollPane(moviesTextArea);
+				topPanel.add(movieScrollPane, BorderLayout.SOUTH);
+			}	
+			
+			
+		}
+		
+		catch(SQLException e)
+		{
+			// System.out.println("Not all users slots are filled in");
+		}
+		
+		catch(Exception e)
+		{
+			System.out.println("Error");
+		}
+		
+	}
+	
+	public void addMovie()
+	{
+		centerTopPanel = new JPanel();
+		centerTopPanel.setLayout(new BorderLayout());
+		centerTopPanel.setBorder(new LineBorder(Color.cyan, 10));
+		addMoviePanel = new JPanel();
+		addMoviePanel.setLayout(new GridLayout(8, 2));
+		
+		addMovieHeader = new JLabel("Add Movie");
+		addMovieHeader.setFont(headerFont);
+		addMovieHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		addLabel = new JLabel[6];
+		addField = new JTextField[6];
+		String [] addString = {"Id: ", "Movie: ", "Date: ", "Time 1: ", "Time 2: ", "Time 3: "};
+		empty = new JLabel();
+		addButton = new JButton("Add");
+		addButton.addActionListener(this);
+		
+		for(int i = 0; i < 6; i++)
+		{
+			addLabel[i] = new JLabel(addString[i]);
+			addField[i] = new JTextField();
+			addMoviePanel.add(addLabel[i]);
+			addMoviePanel.add(addField[i]);
+		}
+		addMoviePanel.add(empty);
+		addMoviePanel.add(addButton);
+		centerTopPanel.add(addMovieHeader, BorderLayout.NORTH);
+		centerTopPanel.add(addMoviePanel, BorderLayout.CENTER);
+		centerPanel.add(centerTopPanel, BorderLayout.CENTER);
+		
+	
+		
+
+	}
+	
+	public void removeMovie()
+	{
+		centerBottomPanel = new JPanel();
+		centerBottomPanel.setLayout(new GridLayout(5, 1));
+		centerBottomPanel.setBorder(new LineBorder(Color.cyan, 10));
+		enterIdPanel = new JPanel();
+		enterIdPanel.setLayout(new GridLayout(1, 1));
+		enterMoviePanel = new JPanel();
+		enterMoviePanel.setLayout(new GridLayout(1, 1));
+		removeMoviePanel = new JPanel();
+		removeMoviePanel.setLayout(new GridLayout(1, 1));
+
+		removeMovieHeader = new JLabel("Remove Movie");
+		removeMovieHeader.setFont(headerFont);
+		removeMovieHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		centerBottomPanel.add(removeMovieHeader);
+		
+		enterId = new JLabel("Enter Id");
+		enterIdField = new JTextField();
+		enterIdPanel.add(enterId);
+		enterIdPanel.add(enterIdField);
+		centerBottomPanel.add(enterIdPanel);
+		
+		orLabel = new JLabel("OR");
+		orLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		centerBottomPanel.add(orLabel);
+		
+		enterMovie = new JLabel("Movie name");
+		enterMovieField = new JTextField();
+		empty = new JLabel();
+		enterMoviePanel.add(enterMovie);
+		enterMoviePanel.add(enterMovieField);
+		centerBottomPanel.add(enterMoviePanel);
+		
+		empty = new JLabel();
+		removeMovieButton = new JButton("Remove");
+		removeMoviePanel.add(empty);
+		removeMoviePanel.add(removeMovieButton);
+		centerBottomPanel.add(removeMoviePanel);
+		
+		centerPanel.add(centerBottomPanel, BorderLayout.SOUTH);
+	}
+	
+	public void viewUsers()
+	{
+		bottomTopPanel = new JPanel();
+		bottomTopPanel.setLayout(new BorderLayout());
+		enterNamePanel = new JPanel();
+		enterNamePanel.setLayout(new GridLayout(1,2));
+		
+		viewUsers = new JLabel("View Users");
+		viewUsers.setFont(headerFont);
+		viewUsers.setHorizontalAlignment(SwingConstants.CENTER);
+		bottomTopPanel.add(viewUsers, BorderLayout.NORTH);
+		usersTextArea = new JTextArea(5, 20);
+		usersTextArea.setEditable(false);
+		userScrollPane = new JScrollPane();
+		users = new String[50];
+		
+		
+		
+		
+		bottomPanel.add(bottomTopPanel, BorderLayout.NORTH);
+		
+	}
+	
+	public void removeUsers()
+	{
+		bottomBottomPanel = new JPanel();
+		bottomBottomPanel.setLayout(new BorderLayout());
+		bottomBottomPanel.setBorder(new LineBorder(Color.cyan, 10));
+		removePanel = new JPanel();
+		removePanel.setLayout(new GridLayout(2,2));
+		
+		removeUsers = new JLabel("Remove User");
+		removeUsers.setFont(headerFont);
+		removeUsers.setHorizontalAlignment(SwingConstants.CENTER);
+		bottomBottomPanel.add(removeUsers, BorderLayout.NORTH);
+		
+		removeId = new JLabel("Enter Id");
+		removeIdField = new JTextField();
+		empty = new JLabel();
+		JButton removeIdButton = new JButton("Remove");
+		removePanel.add(removeId);
+		removePanel.add(removeIdField);
+		removePanel.add(empty);
+		removePanel.add(removeIdButton);
+		bottomBottomPanel.add(removePanel, BorderLayout.CENTER);
+		
+		
+		bottomPanel.add(bottomBottomPanel, BorderLayout.SOUTH);
+		
+	}
+	
+	
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource() == addButton)
+		{
+			try
+			{
+				
+				connect = DriverManager.getConnection(host, username, password);
+				PreparedStatement statement = (PreparedStatement) connect.prepareStatement("INSERT INTO movies(id, movie, date, time01, time02, time03) VALUES(?, ?, ?, ?, ?, ?)");
+				
+				for(int i = 1; i <= 6; i++)
+				{
+					statement.setString(i, addField[i-1].getText());
+					statement.executeUpdate();
+				}
+				
+				
+				connect.close();
+			}
+			
+			catch(SQLException f)
+			{
+				f.printStackTrace();
+				//System.out.println("Please do not leave any blanks");
+			}
+		}
+		
+	}
+	
+	
+}

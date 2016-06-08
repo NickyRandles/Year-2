@@ -1,0 +1,21 @@
+package lab07_exercise02;
+
+public class SimpleThread extends Thread
+{
+	public SimpleThread (String str) {super(str);
+	}
+
+		public void run()
+		{
+			 for (int i = 0; i < 10; i++) {
+			 System.out.println(i + " " + getName());
+
+			 try
+			 {
+				sleep((long)(Math.random() * 1000));//waits 1 second
+			 }
+			 catch (InterruptedException e) {}
+		}
+			System.out.println("DONE! " + getName());
+	}
+ }

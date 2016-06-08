@@ -1,0 +1,48 @@
+body
+{
+
+}
+
+form
+{
+	width: 40%;
+	background-color: cyan;
+	border: 2px solid red;
+	margin-left: 30%;
+}
+
+fieldset
+{
+	border: 2px solid green;
+}
+
+legend
+{
+	font-weight: bold;
+}
+
+h1
+{
+	text-align: center;
+	color: red;
+}
+
+h3
+{
+	text-align: center;
+}
+
+#optional
+{
+	color: red;
+}
+
+textarea
+{
+	margin-left: 20%;
+}
+
+#buttons
+{
+	margin-left: 35%;
+}

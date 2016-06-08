@@ -1,0 +1,37 @@
+package Cinema;
+
+import java.awt.*;
+
+import javax.swing.*;
+
+public class GUI_invoiceFrame {
+	
+	JInternalFrame invoiceFrame = new JInternalFrame();
+	JPanel panel, bottomPanel;
+	JLabel invoice; 
+	
+	public void invoiceFrame()
+	{
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		
+		invoice = new JLabel("<html>Economy<br>Regularity</html>");
+		panel.add(invoice, BorderLayout.NORTH);
+		
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		
+		
+		invoiceFrame.add(panel);
+
+		GUITemplate.header(invoiceFrame);
+		GUITemplate.footer(invoiceFrame);
+		
+		GUI.desktop.add(invoiceFrame);
+		
+		invoiceFrame.setSize(484, 462);
+		invoiceFrame.setVisible(true);
+	}
+
+}

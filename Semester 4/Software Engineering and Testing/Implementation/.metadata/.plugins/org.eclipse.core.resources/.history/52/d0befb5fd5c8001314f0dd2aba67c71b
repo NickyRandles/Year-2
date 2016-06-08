@@ -1,0 +1,41 @@
+package Cinema;
+
+import java.awt.*;
+
+import javax.swing.*;
+
+public class GUI_invoiceFrame {
+	
+	JInternalFrame invoiceFrame = new JInternalFrame();
+	JPanel panel, bottomPanel;
+	JLabel invoice, note01, note02; 
+	JButton printButton;
+	
+	public void invoiceFrame()
+	{
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		
+		invoice = new JLabel("<html>Economy<br>Regularity</html>");
+		panel.add(invoice, BorderLayout.NORTH);
+		
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		
+		note01 = new JLabel("<html>Note: Please print off this invoice and <br> hand to cashier as prove of purchase</html>");
+		printButton = new JButton("Print");
+		note02 = new JLabel("<html>Note: if you are not able to print this invoice <br> please give the cashier you account details</html>");
+		
+		invoiceFrame.add(panel);
+
+		GUITemplate.header(invoiceFrame);
+		GUITemplate.footer(invoiceFrame);
+		
+		GUI.desktop.add(invoiceFrame);
+		
+		invoiceFrame.setSize(484, 462);
+		invoiceFrame.setVisible(true);
+	}
+
+}

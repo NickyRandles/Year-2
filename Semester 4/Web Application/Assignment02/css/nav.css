@@ -1,0 +1,37 @@
+/* ------- nav ------- */
+nav ul {
+    display: webkit-flex;
+    display: flex;
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    webkit-flex: 1;
+    flex: 1;
+}
+
+nav a {
+    display: block;
+
+    border: 8px solid lime;
+    padding: 5px;
+
+    background: aqua;
+    text-align: center;
+
+    color: black;
+    text-decoration:none;
+}
+
+nav a:hover {
+    text-decoration:underline;
+}
+
+nav a.current_page {
+    color: white;
+    background: green;
+    text-decoration:none;
+}
